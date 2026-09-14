@@ -40,7 +40,10 @@ export class Rendering
         this.renderer = new THREE.WebGPURenderer({
             canvas: this.game.canvasElement,
             powerPreference: 'high-performance',
-            forceWebGL: false,
+            // WebGPU can initialise successfully and still fail when the full
+            // world shaders are compiled on some browser/GPU combinations.
+            // WebGL is the proven-compatible production backend for this scene.
+            forceWebGL: true,
             antialias: this.game.viewport.pixelRatio < 2
         })
         this.renderer.setSize(this.game.viewport.width, this.game.viewport.height)
